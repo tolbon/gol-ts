@@ -1,0 +1,25 @@
+{
+  "name": "gol-ts",
+  "version": "1.0.0",
+  "description": "Conway Game Of Life in Typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tolbon/gol-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tolbon/gol-ts/issues"
+  },
+  "homepage": "https://github.com/tolbon/gol-ts#readme",
+  "devDependencies": {
+    "typescript": "^2.3.2",
+    "benchmark": "^2.1.4",
+    "eslint": "^3.19.0",
+    "mocha": "^3.3.0"
+  }
+}
