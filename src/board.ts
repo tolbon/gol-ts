@@ -1,6 +1,6 @@
 "use strict";
 
-class Board implements IBoard {
+export class Board implements IBoard {
     private board: Array<Int8Array>;
     readonly width: number;
     readonly height: number;
@@ -34,7 +34,7 @@ class Board implements IBoard {
 
     public computeNextStep(): void
     {
-        let copy = this.board;
+        let copy = this.cloneBoard();
         
         for(let i = 0; i < this.height; i++)
         {
@@ -43,6 +43,19 @@ class Board implements IBoard {
                 copy[i][j] = this.cellCompute(i, j);
             }
         }
+        this.board = copy;       
+    }
+
+
+    private cloneBoard(): Array<Int8Array>
+    {
+        let copy = new Array<Int8Array>(this.height);
+        for(let i = 0; i < this.height; i++)
+        {
+            copy[i] = this.board[i].slice();
+        }
+
+        return copy;
     }
 
     public cellCompute(y: number, x: number): eState
@@ -79,6 +92,10 @@ class Board implements IBoard {
                     countLive++;
                 }
             }
+        }
+        if (this.board[y][x] !== eState.Dead)
+        {
+            countLive--;
         }
 
         return this.cellNextValue(this.board[y][x], countLive);
