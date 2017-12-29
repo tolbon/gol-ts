@@ -1,6 +1,6 @@
 "use strict";
 
-export class Board implements IBoard {
+class Board implements IBoard {
     private board: Array<Int8Array>;
     readonly width: number;
     readonly height: number;

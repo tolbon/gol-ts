@@ -1,6 +1,4 @@
 "use strict";
-import * as dat from "dat-gui"; 
-
 
 class CanvasParams
 {
@@ -33,7 +31,6 @@ window.onload = function() {
     canvasParams = new CanvasParams();
     gui = new dat.GUI();
 
-    let ctx:CanvasRenderingContext2D|null = null;
     if (canvasParams.canvas === null || !canvasParams.canvas.getContext)
     {
         console.error("Init Fail");
@@ -41,13 +38,15 @@ window.onload = function() {
     }
     else
     {
-        ctx = canvasParams.canvas.getContext("2d");
-        if (ctx === null)
+        let ctxLocal:CanvasRenderingContext2D|null = null;        
+        ctxLocal = canvasParams.canvas.getContext("2d");
+        if (ctxLocal === null)
         {
             console.error("Init Fail getContext 2D");
         }
         else
         {
+            canvasParams.ctx = ctxLocal;
             canvasParams.xCanvas = canvasParams.canvas.offsetTop;
             canvasParams.yCanvas = canvasParams.canvas.offsetLeft;
             canvasParams.canvas.addEventListener("pointerdown", pointerDownEvent);
@@ -56,28 +55,25 @@ window.onload = function() {
     }
 
     gui.add(canvasParams, 'squareWidth');
-
 }
-
-
 
 
 function pointerDownEvent(ev:PointerEvent): any
 {
-    canvasParams.canvas.addEventListener("pointermove", pointerMoveEvent);
+    canvasParams.canvas!.addEventListener("pointermove", pointerMoveEvent);
 }
 
 function pointerUpEvent(ev:PointerEvent): any
 {
-    canvasParams.canvas.removeEventListener("pointermove", pointerMoveEvent);
+    canvasParams.canvas!.removeEventListener("pointermove", pointerMoveEvent);
 }
 
 function pointerMoveEvent(ev:PointerEvent): any
 {
-    if (ctx !== null)
+    if (canvasParams.ctx !== null)
     {
-        ctx.fillStyle = "rgb(200,0,0)";
-        ctx.fillRect (ev.x, ev.y, squareWidth, squareWidth);
+        canvasParams.ctx.fillStyle = "rgb(200,0,0)";
+        canvasParams.ctx.fillRect (ev.x, ev.y, canvasParams.squareWidth, canvasParams.squareWidth);
     }
 }
 
