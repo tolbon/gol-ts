@@ -3,8 +3,8 @@
 class CanvasParams
 {
     public readonly canvas: HTMLCanvasElement|null;
-    public xCanvas: number;
-    public yCanvas: number;
+    public xCanvas: number = 0;
+    public yCanvas: number = 0;
     public squareWidth = 5;
     public ctx:CanvasRenderingContext2D|null = null;
 
