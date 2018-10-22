@@ -97,4 +97,4 @@ var BoardEs6 = (function () {
     return BoardEs6;
 }());
 exports.BoardEs6 = BoardEs6;
-//# sourceMappingURL=/home/jb/Documents/gol-ts/dist/boardEs6.js.map
+//# sourceMappingURL=../src/dist/boardEs6.js.map

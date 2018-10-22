@@ -1,8 +1,8 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var dat = require("dat-gui");
 var CanvasParams = (function () {
     function CanvasParams() {
+        this.xCanvas = 0;
+        this.yCanvas = 0;
         this.squareWidth = 5;
         this.ctx = null;
         this.canvas = document.getElementById("canvas_gol");
@@ -50,4 +50,4 @@ function pointerMoveEvent(ev) {
         canvasParams.ctx.fillRect(ev.x, ev.y, canvasParams.squareWidth, canvasParams.squareWidth);
     }
 }
-//# sourceMappingURL=/home/jb/Documents/gol-ts/dist/index.js.map
+//# sourceMappingURL=../src/dist/index.js.map

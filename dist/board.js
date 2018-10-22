@@ -81,4 +81,4 @@ var Board = (function () {
     return Board;
 }());
 exports.Board = Board;
-//# sourceMappingURL=/home/jb/Documents/gol-ts/dist/board.js.map
+//# sourceMappingURL=../src/dist/board.js.map
