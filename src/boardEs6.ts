@@ -15,7 +15,7 @@ class BoardEs6 implements IBoard {
             this.board[i] = new Int8Array(this.width);
             for(let j = 0; j < this.height; j++)
             {
-                this.board[i][j]  = eState.Dead;
+                this.board[i][j] = eState.Dead;
             }
         }
     }
