@@ -1,23 +1,15 @@
 "use strict";
 
-export class BoardEs6 implements IBoard {
-    private board: Array<Int8Array>;
+export class BoardArray implements IBoard {
+    private board: Int8Array;
     readonly width: number;
     readonly height: number;
 
     public constructor(width: number = 255, height: number = 255)
     {
-        this.board = new Array<Int8Array>(height);
+        this.board = new Int8Array(height * width);
         this.width = width | 0;
         this.height = height | 0;
-        for(let i = 0; i < this.height; i++)
-        {
-            this.board[i] = new Int8Array(this.width);
-            for(let j = 0; j < this.height; j++)
-            {
-                this.board[i][j] = eState.Dead;
-            }
-        }
     }
 
     public computeStep(nbStep: number = 1): void
@@ -32,44 +24,11 @@ export class BoardEs6 implements IBoard {
         }
     }
 
-    public computeStepV2(nbStep: number = 1): void
-    {
-        if (nbStep < 0)
-        {
-            nbStep = 1;
-        }
-        for(let i = 0; i < nbStep; i++)
-        {
-            this.computeNextStepV2();
-        }
-    }
-
     public computeNextStep(): void
     {
-        let copy = this.cloneBoard();
-        
-        copy.forEach((line:Int8Array, y:number, board:Array<Int8Array>) => {
-            line.forEach((cell:number, x:number, line:Int8Array) => {
-                line[x] = this.cellCompute(y, x);
-            });
-        });
-        this.board = copy;        
-    }
-
-    private cloneBoard(): Array<Int8Array>
-    {
-        return this.board.map((value:Int8Array) => {
-            return value.slice();
-        });
-    }
-
-    public computeNextStepV2(): void
-    {        
-        this.board = this.board.map((line:Int8Array, y:number, b:Int8Array[]) => {
-            return line.map((cell:number, x:number) => {
-                return this.cellCompute(y, x);
-            });
-        });  
+        this.board = this.board.map((line:number, i:number, b:Int8Array) => {
+            return this.cellCompute(i, 0);
+        });        
     }
 
     public cellCompute(y: number, x: number): eState
@@ -101,18 +60,18 @@ export class BoardEs6 implements IBoard {
         {
             for (let j = xMin; j <= xMax; j++)
             {
-                if (this.board[i][j] !== eState.Dead)
+                if (this.board[(i * 1 + j)] !== eState.Dead)
                 {
                     countLive++;
                 }
             }
         }
-        if (this.board[y][x] !== eState.Dead)
+        if (this.board[(y * 1 + x)] !== eState.Dead)
         {
             countLive--;
         }
 
-        return this.cellNextValue(this.board[y][x], countLive);
+        return this.cellNextValue(this.board[(y * 1 + x)], countLive);
     } 
 
     private cellNextValue(currentState: eState, nbNeighbours: number): eState

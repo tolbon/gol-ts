@@ -1,66 +1,60 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var BoardEs6 = (function () {
-    function BoardEs6(width, height) {
-        if (width === void 0) { width = 255; }
-        if (height === void 0) { height = 255; }
+class BoardEs6 {
+    constructor(width = 255, height = 255) {
         this.board = new Array(height);
         this.width = width | 0;
         this.height = height | 0;
-        for (var i = 0; i < this.height; i++) {
+        for (let i = 0; i < this.height; i++) {
             this.board[i] = new Int8Array(this.width);
-            for (var j = 0; j < this.height; j++) {
+            for (let j = 0; j < this.height; j++) {
                 this.board[i][j] = 0;
             }
         }
     }
-    BoardEs6.prototype.computeStep = function (nbStep) {
-        if (nbStep === void 0) { nbStep = 1; }
+    computeStep(nbStep = 1) {
         if (nbStep < 0) {
             nbStep = 1;
         }
-        for (var i = 0; i < nbStep; i++) {
+        for (let i = 0; i < nbStep; i++) {
             this.computeNextStep();
         }
-    };
-    BoardEs6.prototype.computeStepV2 = function (nbStep) {
-        if (nbStep === void 0) { nbStep = 1; }
+    }
+    computeStepV2(nbStep = 1) {
         if (nbStep < 0) {
             nbStep = 1;
         }
-        for (var i = 0; i < nbStep; i++) {
+        for (let i = 0; i < nbStep; i++) {
             this.computeNextStepV2();
         }
-    };
-    BoardEs6.prototype.computeNextStep = function () {
-        var _this = this;
-        var copy = this.cloneBoard();
-        copy.forEach(function (line, y, board) {
-            line.forEach(function (cell, x, line) {
-                line[x] = _this.cellCompute(y, x);
+    }
+    computeNextStep() {
+        let copy = this.cloneBoard();
+        copy.forEach((line, y, board) => {
+            line.forEach((cell, x, line) => {
+                line[x] = this.cellCompute(y, x);
             });
         });
         this.board = copy;
-    };
-    BoardEs6.prototype.cloneBoard = function () {
-        return this.board.map(function (value) {
+    }
+    cloneBoard() {
+        return this.board.map((value) => {
             return value.slice();
         });
-    };
-    BoardEs6.prototype.computeNextStepV2 = function () {
-        var _this = this;
-        this.board = this.board.map(function (line, y, b) {
-            return line.map(function (cell, x) {
-                return _this.cellCompute(y, x);
+    }
+    computeNextStepV2() {
+        this.board = this.board.map((line, y, b) => {
+            return line.map((cell, x) => {
+                return this.cellCompute(y, x);
             });
         });
-    };
-    BoardEs6.prototype.cellCompute = function (y, x) {
-        var xMin = x - 1;
-        var xMax = x + 1;
-        var yMin = y - 1;
-        var yMax = y + 1;
-        var countLive = 0;
+    }
+    cellCompute(y, x) {
+        let xMin = x - 1;
+        let xMax = x + 1;
+        let yMin = y - 1;
+        let yMax = y + 1;
+        let countLive = 0;
         if (xMin < 0) {
             xMin = 0;
         }
@@ -73,8 +67,8 @@ var BoardEs6 = (function () {
         if (yMax >= this.height) {
             yMax = this.height - 1;
         }
-        for (var i = yMin; i <= yMax; i++) {
-            for (var j = xMin; j <= xMax; j++) {
+        for (let i = yMin; i <= yMax; i++) {
+            for (let j = xMin; j <= xMax; j++) {
                 if (this.board[i][j] !== 0) {
                     countLive++;
                 }
@@ -84,8 +78,8 @@ var BoardEs6 = (function () {
             countLive--;
         }
         return this.cellNextValue(this.board[y][x], countLive);
-    };
-    BoardEs6.prototype.cellNextValue = function (currentState, nbNeighbours) {
+    }
+    cellNextValue(currentState, nbNeighbours) {
         if (nbNeighbours === 3) {
             return 1;
         }
@@ -93,8 +87,7 @@ var BoardEs6 = (function () {
             return currentState;
         }
         return 0;
-    };
-    return BoardEs6;
-}());
+    }
+}
 exports.BoardEs6 = BoardEs6;
-//# sourceMappingURL=/home/jb/Documents/gol-ts/dist/boardEs6.js.map
+//# sourceMappingURL=../src/dist/boardEs6.js.map

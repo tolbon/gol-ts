@@ -1,16 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Board {
+class BoardArray {
     constructor(width = 255, height = 255) {
-        this.board = new Array(height);
+        this.board = new Int8Array(height * width);
         this.width = width | 0;
         this.height = height | 0;
-        for (let i = 0; i < this.height; i++) {
-            this.board[i] = new Int8Array(this.width);
-            for (let j = 0; j < this.height; j++) {
-                this.board[i][j] = 0;
-            }
-        }
     }
     computeStep(nbStep = 1) {
         if (nbStep < 0) {
@@ -21,20 +15,9 @@ class Board {
         }
     }
     computeNextStep() {
-        let copy = this.cloneBoard();
-        for (let i = 0; i < this.height; i++) {
-            for (let j = 0; j < this.width; j++) {
-                copy[i][j] = this.cellCompute(i, j);
-            }
-        }
-        this.board = copy;
-    }
-    cloneBoard() {
-        let copy = new Array(this.height);
-        for (let i = 0; i < this.height; i++) {
-            copy[i] = this.board[i].slice();
-        }
-        return copy;
+        this.board = this.board.map((line, i, b) => {
+            return this.cellCompute(i, 0);
+        });
     }
     cellCompute(y, x) {
         let xMin = x - 1;
@@ -56,15 +39,15 @@ class Board {
         }
         for (let i = yMin; i <= yMax; i++) {
             for (let j = xMin; j <= xMax; j++) {
-                if (this.board[i][j] !== 0) {
+                if (this.board[(i * 1 + j)] !== 0) {
                     countLive++;
                 }
             }
         }
-        if (this.board[y][x] !== 0) {
+        if (this.board[(y * 1 + x)] !== 0) {
             countLive--;
         }
-        return this.cellNextValue(this.board[y][x], countLive);
+        return this.cellNextValue(this.board[(y * 1 + x)], countLive);
     }
     cellNextValue(currentState, nbNeighbours) {
         if (nbNeighbours === 3) {
@@ -76,5 +59,5 @@ class Board {
         return 0;
     }
 }
-exports.Board = Board;
-//# sourceMappingURL=../src/dist/board.js.map
+exports.BoardArray = BoardArray;
+//# sourceMappingURL=../src/dist/boardArray.js.map
