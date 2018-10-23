@@ -60,18 +60,18 @@ export class BoardArray implements IBoard {
         {
             for (let j = xMin; j <= xMax; j++)
             {
-                if (this.board[(i + j)] !== eState.Dead)
+                if (this.board[(i * 1 + j)] !== eState.Dead)
                 {
                     countLive++;
                 }
             }
         }
-        if (this.board[(y + x)] !== eState.Dead)
+        if (this.board[(y * 1 + x)] !== eState.Dead)
         {
             countLive--;
         }
 
-        return this.cellNextValue(this.board[(y + x)], countLive);
+        return this.cellNextValue(this.board[(y * 1 + x)], countLive);
     } 
 
     private cellNextValue(currentState: eState, nbNeighbours: number): eState

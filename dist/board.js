@@ -1,50 +1,47 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Board = (function () {
-    function Board(width, height) {
-        if (width === void 0) { width = 255; }
-        if (height === void 0) { height = 255; }
+class Board {
+    constructor(width = 255, height = 255) {
         this.board = new Array(height);
         this.width = width | 0;
         this.height = height | 0;
-        for (var i = 0; i < this.height; i++) {
+        for (let i = 0; i < this.height; i++) {
             this.board[i] = new Int8Array(this.width);
-            for (var j = 0; j < this.height; j++) {
+            for (let j = 0; j < this.height; j++) {
                 this.board[i][j] = 0;
             }
         }
     }
-    Board.prototype.computeStep = function (nbStep) {
-        if (nbStep === void 0) { nbStep = 1; }
+    computeStep(nbStep = 1) {
         if (nbStep < 0) {
             nbStep = 1;
         }
-        for (var i = 0; i < nbStep; i++) {
+        for (let i = 0; i < nbStep; i++) {
             this.computeNextStep();
         }
-    };
-    Board.prototype.computeNextStep = function () {
-        var copy = this.cloneBoard();
-        for (var i = 0; i < this.height; i++) {
-            for (var j = 0; j < this.width; j++) {
+    }
+    computeNextStep() {
+        let copy = this.cloneBoard();
+        for (let i = 0; i < this.height; i++) {
+            for (let j = 0; j < this.width; j++) {
                 copy[i][j] = this.cellCompute(i, j);
             }
         }
         this.board = copy;
-    };
-    Board.prototype.cloneBoard = function () {
-        var copy = new Array(this.height);
-        for (var i = 0; i < this.height; i++) {
+    }
+    cloneBoard() {
+        let copy = new Array(this.height);
+        for (let i = 0; i < this.height; i++) {
             copy[i] = this.board[i].slice();
         }
         return copy;
-    };
-    Board.prototype.cellCompute = function (y, x) {
-        var xMin = x - 1;
-        var xMax = x + 1;
-        var yMin = y - 1;
-        var yMax = y + 1;
-        var countLive = 0;
+    }
+    cellCompute(y, x) {
+        let xMin = x - 1;
+        let xMax = x + 1;
+        let yMin = y - 1;
+        let yMax = y + 1;
+        let countLive = 0;
         if (xMin < 0) {
             xMin = 0;
         }
@@ -57,8 +54,8 @@ var Board = (function () {
         if (yMax >= this.height) {
             yMax = this.height - 1;
         }
-        for (var i = yMin; i <= yMax; i++) {
-            for (var j = xMin; j <= xMax; j++) {
+        for (let i = yMin; i <= yMax; i++) {
+            for (let j = xMin; j <= xMax; j++) {
                 if (this.board[i][j] !== 0) {
                     countLive++;
                 }
@@ -68,8 +65,8 @@ var Board = (function () {
             countLive--;
         }
         return this.cellNextValue(this.board[y][x], countLive);
-    };
-    Board.prototype.cellNextValue = function (currentState, nbNeighbours) {
+    }
+    cellNextValue(currentState, nbNeighbours) {
         if (nbNeighbours === 3) {
             return 1;
         }
@@ -77,8 +74,7 @@ var Board = (function () {
             return currentState;
         }
         return 0;
-    };
-    return Board;
-}());
+    }
+}
 exports.Board = Board;
 //# sourceMappingURL=../src/dist/board.js.map
