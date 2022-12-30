@@ -20,7 +20,7 @@
     "@types/dat.gui": "^0.7.2",
     "benchmark": "^2.1.4",
     "eslint": "^6.5.1",
-    "mocha": "^6.2.1",
+    "mocha": "^10.2.0",
     "typescript": "^3.6"
   },
   "dependencies": {
